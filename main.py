@@ -4,8 +4,9 @@ import database
 app=Flask(__name__)
 app.secret_key="384htoeirgn"
 
-
-
+@app.route("/register")
+def index():
+    return render_template("register.html")
 
 @app.route("/register",methods=["POST","GET"])
 def register():
@@ -35,3 +36,24 @@ def register():
             return render_template("success_register.html")
         else:
             return render_template("register.html",errors=errors )
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+    elif request.method == "POST":
+        login = request.form["login"]
+        password = request.form["password"]
+
+        auth_user = database.auth_user(login, password)
+        if auth_user == None:
+            return render_template(
+                "login.html",
+                errors=["Неверный параль"]
+            )
+        else:
+            print("Успешная авторизация")
+            session["user_id"] = auth_user["user_id"]
+            session["login"] = auth_user["user_login"]
+            return redirect(url_for('index'))
+if __name__ == '__main__':
+    app.run(debug=True)
