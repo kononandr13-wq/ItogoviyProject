@@ -30,7 +30,7 @@ def create_db():
 def get_users():
     conn = sqlite3.connect("todo.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM User")  # Исправлено: User вместо users
+    cursor.execute("SELECT * FROM User")
     users = cursor.fetchall()
     conn.close()
     return users
@@ -71,7 +71,7 @@ def is_user_exists(login):
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM User WHERE login = ?", (login,))
     user = cursor.fetchone()
-    conn.close()  # Добавлено закрытие соединения
+    conn.close()
     return user is not None
 
 if __name__ == "__main__":
