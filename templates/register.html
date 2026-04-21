@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация жигули</title>
+    <title>Регистрация сотрудников УФСБ | by Andrey and Timur</title>
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
 </head>
 <body>
-    <h1>Регистрация</h1>
+    <h1>Регистрация сотрудников</h1>
     <form action="/register" method="POST">
         <div>
             <label for="">Логин:</label>
@@ -24,6 +24,7 @@
         <div>
             <input type="submit" name="Регестрация">
         </div>
+         
     </form>
     <div class="errors">
         {% for error in errors %}
