@@ -6,25 +6,55 @@ def create_db():
     cursor = conn.cursor()
 
     sql = '''
-        CREATE TABLE IF NOT EXISTS User (
+        CREATE TABLE IF NOT EXISTS Dostyp (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            login VARCHAR(1000) NOT NULL,
-            password VARCHAR(1000) NOT NULL
+            level VARCHAR(1000) NOT NULL,
         )
     '''
     cursor.execute(sql)
 
     sql = '''
-        CREATE TABLE IF NOT EXISTS task (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            text VARCHAR(1000) NOT NULL,
-            is_done BOOLEAN DEFAULT FALSE,
-            user_id INTEGER,
-            FOREIGN KEY (user_id) REFERENCES User(id)
+        CREATE TABLE IF NOT EXISTS gos_persona (
+            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            rank VARCHAR(1000) NOT NULL,
+            Name VARCHAR(1000) NOT NULL,
+            Surname VARCHAR(1000) NOT NULL,
+            Patronymic VARCHAR(1000) NOT NULL,
+            login VARCHAR(1000) NOT NULL,
+            password VARCHAR(1000) NOT NULL,
+            dostyp_id INTEGER NOT NULL,
+            FOREIGN KEY (dostyp_id) REFERENCES Dostyp(id)
         )
     '''
     cursor.execute(sql)
     conn.commit()
+
+    sql = '''
+        CREATE TABLE IF NOT EXISTS file (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            reason VARCHAR(1000) NOT NULL,
+            notes VARCHAR(1000) NOT NULL,
+            photo VARCHAR(1000) NOT NULL,
+            tickets VARCHAR(1000) NOT NULL,
+        )
+    '''
+    cursor.execute(sql)
+
+    sql = '''
+        CREATE TABLE IF NOT EXISTS Citizens (
+            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Name VARCHAR(1000) NOT NULL,
+            Surname VARCHAR(1000) NOT NULL,
+            Patronymic VARCHAR(1000) NOT NULL,
+            is_wanted INTEGER DEFAULT NULL,
+            file_id INTEGER NOT NULL,
+            FOREIGN KEY (file_id) REFERENCES file(id)
+        )
+    '''
+    cursor.execute(sql)
+
+
+
     conn.close()
 
 def get_users():
