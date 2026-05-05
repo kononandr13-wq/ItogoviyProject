@@ -26,9 +26,10 @@ def create_db():
             FOREIGN KEY (dostyp_id) REFERENCES Dostyp(id)
         )
     '''
+
     cursor.execute(sql)
     conn.commit()
-
+    
     sql = '''
         CREATE TABLE IF NOT EXISTS file (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
