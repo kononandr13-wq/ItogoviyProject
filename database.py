@@ -3,113 +3,117 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 def create_db():
     conn = sqlite3.connect("todo.db")
+    conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
 
     sql = '''
         CREATE TABLE IF NOT EXISTS Dostyp (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             level VARCHAR(1000) NOT NULL,
+            level VARCHAR(1000) NOT NULL
         )
     '''
     cursor.execute(sql)
+
+    # Добавление 3 уровней доступа (Первый, Второй, Третий)
+    cursor.execute("INSERT INTO Dostyp(level) VALUES('Первый уровень')")
+    cursor.execute("INSERT INTO Dostyp(level) VALUES('Второй уровень')")
+    cursor.execute("INSERT INTO Dostyp(level) VALUES('Третий уровень')")
 
     sql = '''
         CREATE TABLE IF NOT EXISTS gos_persona (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            rank VARCHAR(1000) NOT NULL,
-            Name VARCHAR(1000) NOT NULL,
-            Surname VARCHAR(1000) NOT NULL,
-            Patronymic VARCHAR(1000) NOT NULL,
-            login VARCHAR(1000) NOT NULL,
-            password VARCHAR(1000) NOT NULL,
-            dostyp_id INTEGER NOT NULL,
-            FOREIGN KEY (dostyp_id) REFERENCES Dostyp(id)
+@ -27,7 +32,7 @@ def create_db():
         )
     '''
-
     cursor.execute(sql)
     conn.commit()
     
+
     sql = '''
         CREATE TABLE IF NOT EXISTS file (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            def create_db():
             reason VARCHAR(1000) NOT NULL,
             notes VARCHAR(1000) NOT NULL,
             photo VARCHAR(1000) NOT NULL,
             tickets VARCHAR(1000) NOT NULL,
+            tickets VARCHAR(1000) NOT NULL
         )
     '''
     cursor.execute(sql)
-
-    sql = '''
-        CREATE TABLE IF NOT EXISTS Citizens (
-            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            Name VARCHAR(1000) NOT NULL,
-            Surname VARCHAR(1000) NOT NULL,
-            Patronymic VARCHAR(1000) NOT NULL,
-            is_wanted INTEGER DEFAULT NULL,
-            file_id INTEGER NOT NULL,
-            FOREIGN KEY (file_id) REFERENCES file(id)
-        )
-    '''
+def create_db():
+    
     cursor.execute(sql)
 
 
+    conn.commit()
 
     conn.close()
 
 def get_users():
     conn = sqlite3.connect("todo.db")
+    conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM User")
+    cursor.execute("SELECT * FROM Dostyp")
     users = cursor.fetchall()
     conn.close()
     return users
 
 def auth_user(login, password):
     conn = sqlite3.connect("todo.db")
+    conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
 
     cursor.execute(
-        "SELECT * FROM user WHERE login=?", (login,)
-    )
-    user = cursor.fetchone()
-    if not user:
-        return None
-    
-    if check_password_hash(user[2], password):
-        return {
-            "user_id": user[0],
-            "user_login": user[1]
-        }
+        def auth_user(login, password):
     else:
         return -1
 
 def add_user(login, password):
     conn = sqlite3.connect("todo.db")
+def add_citizens(name,surname, patronymic,is_wanted):
+    conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
     hashed_password = generate_password_hash(password)
+
+    cursor.execute(
+        "INSERT INTO file(reason,notes,photo,tickets)VALUES(?,?,?,?)",
+        ('', '','','')
+    )
+
+    new_file_id = cursor.lastrowid
+
     cursor.execute(
         "INSERT INTO User (login, password) VALUES (?,?)",
         (login, hashed_password)
+        "INSERT INTO Citizens (name,surname, patronymic,is_wanted,file_id) VALUES (?,?,?,?,?)",
+        (name,surname, patronymic,is_wanted, new_file_id)
     )
     print("Создан пользователь " + login)
+    print("Создан пользователь " + name,surname,patronymic)
     conn.commit()
     conn.close()
 
 def is_user_exists(login):
     conn = sqlite3.connect("todo.db")
+    conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM User WHERE login = ?", (login,))
     user = cursor.fetchone()
-    conn.close()
-    return user is not None
+def is_user_exists(login):
 
 if __name__ == "__main__":
     create_db()
     add_user("21", "21")
     add_user("user", "user")
     users = get_users()
+    add_citizens("tIMUR", "sHUPOAWLDKAWLJKD", "HZ", 1)
+users = get_users()
+
+
+
+
 
 
 
