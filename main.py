@@ -4,9 +4,14 @@ import database
 app=Flask(__name__)
 app.secret_key="384htoeirgn"
 
-@app.route("/register")
+@app.route('/')
 def index():
-    return render_template("register.html")
+    return render_template('register.html')
+
+@app.route('/city')
+def city():
+    return render_template('baza_graz.html')
+
 
 @app.route("/register",methods=["POST","GET"])
 def register():
