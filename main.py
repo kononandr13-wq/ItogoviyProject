@@ -11,6 +11,15 @@ def index():
 @app.route('/city')
 def city():
     return render_template('baza_graz.html')
+@app.route('/rozusk')
+def city():
+    return render_template('vudat_rozusk.html')
+@app.route('/shtraf')
+def city():
+    return render_template('vipisat_shtraf.html')
+@app.route('/baza_oper')
+def city():
+    return render_template('baza_oper_y_fcb.html')
 
 
 @app.route("/register",methods=["POST","GET"])
