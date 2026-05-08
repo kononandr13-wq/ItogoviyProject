@@ -23,61 +23,46 @@ def create_db():
     sql = '''
         CREATE TABLE IF NOT EXISTS gos_persona (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-@@ -27,7 +32,7 @@ def create_db():
+            FOREIGN KEY (dostyp_id) REFERENCES Dostyp(id)
         )
     '''
     cursor.execute(sql)
     conn.commit()
-    
-
     sql = '''
         CREATE TABLE IF NOT EXISTS file (
-        def create_db():
-        reason VARCHAR(1000) NOT NULL,
-        notes VARCHAR(1000) NOT NULL,
-        photo VARCHAR(1000) NOT NULL,
-        tickets VARCHAR(1000) NOT NULL,
-        tickets VARCHAR(1000) NOT NULL
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            reason VARCHAR(1000) NOT NULL,
+            notes VARCHAR(1000) NOT NULL,
+            photo VARCHAR(1000) NOT NULL,
+            tickets VARCHAR(1000) NOT NULL
+            tickets VARCHAR(1000) NOT NULL,
         )
-        ''' 
+    '''
     cursor.execute(sql)
-
-def create_db():
-    cursor.execute(sql)
-
-
     conn.commit()
-
     conn.close()
-
 def get_users():
-    conn = sqlite3.connect("todo.db")
     conn = sqlite3.connect("fcb.db")
+    conn = sqlite3.connect("todo.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM User")
     cursor.execute("SELECT * FROM Dostyp")
+    cursor.execute("SELECT * FROM User")
     users = cursor.fetchall()
     conn.close()
     return users
 
 def auth_user(login, password):
-    conn = sqlite3.connect("todo.db")
     conn = sqlite3.connect("fcb.db")
+    conn = sqlite3.connect("todo.db")
     cursor = conn.cursor()
 
-    cursor.execute()
-    def auth_user(login, password):
-    else:
-        return -1
 
-def add_user(login, password):
-    conn = sqlite3.connect("todo.db")
 def add_citizens(name,surname, patronymic,is_wanted):
     conn = sqlite3.connect("fcb.db")
+def add_user(login, password):
+    conn = sqlite3.connect("todo.db")
     cursor = conn.cursor()
-    hashed_password = generate_password_hash(password)
-6
+
     cursor.execute(
         "INSERT INTO file(reason,notes,photo,tickets)VALUES(?,?,?,?)",
         ('', '','','')
@@ -85,3 +70,29 @@ def add_citizens(name,surname, patronymic,is_wanted):
 
     new_file_id = cursor.lastrowid
 
+    hashed_password = generate_password_hash(password)
+    cursor.execute(
+        "INSERT INTO Citizens (name,surname, patronymic,is_wanted,file_id) VALUES (?,?,?,?,?)",
+        (name,surname, patronymic,is_wanted, new_file_id)
+        "INSERT INTO User (login, password) VALUES (?,?)",
+        (login, hashed_password)
+    )
+    print("Создан пользователь " + name,surname,patronymic)
+    print("Создан пользователь " + login)
+    conn.commit()
+    conn.close()
+
+def is_user_exists(login):
+    conn = sqlite3.connect("fcb.db")
+    conn = sqlite3.connect("todo.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM User WHERE login = ?", (login,))
+    user = cursor.fetchone()
+
+if __name__ == "__main__":
+    create_db()
+    add_citizens("tIMUR", "sHUPOAWLDKAWLJKD", "HZ", 1)
+users = get_users()
+    add_user("21", "21")
+    add_user("user", "user")
+    users = get_users()
