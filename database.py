@@ -41,46 +41,19 @@ def create_db():
     cursor.execute(sql)
     conn.commit()
     conn.close()
-def get_users():
-    conn = sqlite3.connect("fcb.db")
-    conn = sqlite3.connect("todo.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Dostyp")
-    cursor.execute("SELECT * FROM User")
-    users = cursor.fetchall()
-    conn.close()
-    return users
+
 
 def auth_user(login, password):
     conn = sqlite3.connect("fcb.db")
     conn = sqlite3.connect("todo.db")
     cursor = conn.cursor()
-
-
+    
 def add_citizens(name,surname, patronymic,is_wanted):
     conn = sqlite3.connect("fcb.db")
+
+
 def add_user(login, password):
-    conn = sqlite3.connect("todo.db")
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "INSERT INTO file(reason,notes,photo,tickets)VALUES(?,?,?,?)",
-        ('', '','','')
-    )
-
-    new_file_id = cursor.lastrowid
-
-    hashed_password = generate_password_hash(password)
-    cursor.execute(
-        "INSERT INTO Citizens (name,surname, patronymic,is_wanted,file_id) VALUES (?,?,?,?,?)",
-        (name,surname, patronymic,is_wanted, new_file_id)
-        "INSERT INTO User (login, password) VALUES (?,?)",
-        (login, hashed_password)
-    )
-    print("Создан пользователь " + name,surname,patronymic)
-    print("Создан пользователь " + login)
-    conn.commit()
-    conn.close()
+    ...
 
 def is_user_exists(login):
     conn = sqlite3.connect("fcb.db")
@@ -92,7 +65,5 @@ def is_user_exists(login):
 if __name__ == "__main__":
     create_db()
     add_citizens("tIMUR", "sHUPOAWLDKAWLJKD", "HZ", 1)
-users = get_users()
-    add_user("21", "21")
-    add_user("user", "user")
+    users = get_users()
     users = get_users()
