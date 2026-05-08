@@ -7,10 +7,15 @@ def create_db():
     cursor = conn.cursor()
 
     sql = '''
-        CREATE TABLE IF NOT EXISTS Dostyp (
+        CREATE TABLE IF NOT EXISTS User (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+<<<<<<< HEAD
             level VARCHAR(1000) NOT NULL,
             level VARCHAR(1000) NOT NULL
+=======
+            login VARCHAR(1000) NOT NULL,
+            password VARCHAR(1000) NOT NULL
+>>>>>>> parent of 57a5d54 (database)
         )
     '''
     cursor.execute(sql)
@@ -21,13 +26,23 @@ def create_db():
     cursor.execute("INSERT INTO Dostyp(level) VALUES('Третий уровень')")
 
     sql = '''
+<<<<<<< HEAD
         CREATE TABLE IF NOT EXISTS gos_persona (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
 @ -27,7 +32,7 @@ def create_db():
+=======
+        CREATE TABLE IF NOT EXISTS task (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            text VARCHAR(1000) NOT NULL,
+            is_done BOOLEAN DEFAULT FALSE,
+            user_id INTEGER,
+            FOREIGN KEY (user_id) REFERENCES User(id)
+>>>>>>> parent of 57a5d54 (database)
         )
     '''
     cursor.execute(sql)
     conn.commit()
+<<<<<<< HEAD
     
 
     sql = '''
@@ -48,6 +63,8 @@ def create_db():
 
     conn.commit()
 
+=======
+>>>>>>> parent of 57a5d54 (database)
     conn.close()
 
 def get_users():
