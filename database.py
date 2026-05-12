@@ -59,29 +59,24 @@ def auth_user(login, password):
 
 def add_citizens(name,surname, patronymic,is_wanted):
     conn = sqlite3.connect("fcb.db")
-def add_user(login, password):
-    conn = sqlite3.connect("todo.db")
-    cursor = conn.cursor()
-
+    cursor=conn.cursor()
+    
     cursor.execute(
         "INSERT INTO file(reason,notes,photo,tickets)VALUES(?,?,?,?)",
         ('', '','','')
     )
 
     new_file_id = cursor.lastrowid
-
-    hashed_password = generate_password_hash(password)
     cursor.execute(
         "INSERT INTO Citizens (name,surname, patronymic,is_wanted,file_id) VALUES (?,?,?,?,?)",
-        (name,surname, patronymic,is_wanted, new_file_id)
-        "INSERT INTO User (login, password) VALUES (?,?)",
-        (login, hashed_password)
+        (name,surname, patronymic,is_wanted,new_file_id)
     )
-    print("Создан пользователь " + name,surname,patronymic)
-    print("Создан пользователь " + login)
-    conn.commit()
-    conn.close()
 
+    #??????????????
+
+
+
+    
 def is_user_exists(login):
     conn = sqlite3.connect("fcb.db")
     conn = sqlite3.connect("todo.db")
