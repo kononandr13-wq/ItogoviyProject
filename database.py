@@ -2,16 +2,14 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 
 def create_db():
-    conn = sqlite3.connect("todo.db")
     conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
 
     sql = '''
         CREATE TABLE IF NOT EXISTS Dostyp (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            level VARCHAR(1000) NOT NULL,
             level VARCHAR(1000) NOT NULL
-        )
+            )
     '''
     cursor.execute(sql)
 
@@ -23,8 +21,15 @@ def create_db():
     sql = '''
         CREATE TABLE IF NOT EXISTS gos_persona (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            rank VARCHAR(1000) NOT NULL,
+            dostyp_id INTEGER,
+            Name VARCHAR(1000) NOT NULL,
+            Surname  VARCHAR(1000) NOT NULL,
+            Patronymic  VARCHAR(1000) NOT NULL,
+            login VARCHAR(1000) NOT NULL,
+            password VARCHAR(1000) NOT NULL,
             FOREIGN KEY (dostyp_id) REFERENCES Dostyp(id)
-        )
+         )
     '''
     cursor.execute(sql)
     conn.commit()
@@ -35,15 +40,30 @@ def create_db():
             notes VARCHAR(1000) NOT NULL,
             photo VARCHAR(1000) NOT NULL,
             tickets VARCHAR(1000) NOT NULL
-            tickets VARCHAR(1000) NOT NULL,
         )
     '''
     cursor.execute(sql)
     conn.commit()
+    sql='''
+        CREATE TABLE IF NOT EXISTS Citizens (
+            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Name VARCHAR(1000) NOT NULL,
+            Surname  VARCHAR(1000) NOT NULL,
+            Patronymic  VARCHAR(1000) NOT NULL,
+            is_wanted VARCHAR(1000) NOT NULL,
+            file_id INTEGER,
+            FOREIGN KEY (file_id) REFERENCES file(id)
+        )
+    '''
+    cursor.execute(sql)
+    conn.commit()
+
+
+
+
     conn.close()
 def get_users():
     conn = sqlite3.connect("fcb.db")
-    conn = sqlite3.connect("todo.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Dostyp")
     cursor.execute("SELECT * FROM User")
@@ -53,7 +73,6 @@ def get_users():
 
 def auth_user(login, password):
     conn = sqlite3.connect("fcb.db")
-    conn = sqlite3.connect("todo.db")
     cursor = conn.cursor()
 
 
@@ -72,22 +91,17 @@ def add_citizens(name,surname, patronymic,is_wanted):
         (name,surname, patronymic,is_wanted,new_file_id)
     )
 
-    #??????????????
-
+    conn.commit()
 
 
     
 def is_user_exists(login):
     conn = sqlite3.connect("fcb.db")
-    conn = sqlite3.connect("todo.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM User WHERE login = ?", (login,))
     user = cursor.fetchone()
 
 if __name__ == "__main__":
     create_db()
-    add_citizens("tIMUR", "sHUPOAWLDKAWLJKD", "HZ", 1)
-users = get_users()
-    add_user("21", "21")
-    add_user("user", "user")
-    users = get_users()
+    add_citizens("tIMUR", "Tmalowenlora", "aklwjhbdk", 1)
+
