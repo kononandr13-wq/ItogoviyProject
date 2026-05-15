@@ -22,6 +22,17 @@ def baza_oper():
     return render_template('baza_oper_y_fcb.html')
 
 
+@app.route("/admin")
+def admin_page():
+    Dostyp=database.get_Dostyp()
+    gos_persona=database.get_gos_persona()
+    file=database.get_file()
+    Citizens=database.get_Citizens()
+
+    return render_template("admin.html",Dostyp=Dostyp,gos_persona=gos_persona,file=file,Citizens=Citizens)
+
+
+
 @app.route("/register",methods=["POST","GET"])
 def register():
     if request.method=="GET":
