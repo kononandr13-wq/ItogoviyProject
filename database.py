@@ -64,15 +64,53 @@ def create_db():
 
 
 
-    conn.close()
+
+    conn.close()  
 def get_users():
     conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
+
     cursor.execute("SELECT * FROM Dostyp")
     cursor.execute("SELECT * FROM Citizens")
     users = cursor.fetchall()
     conn.close()
     return users
+
+def get_Dostyp():
+    conn =sqlite3.connect("fcb.db")
+    cursor=conn.cursor
+
+    cursor.execute("SELECT * FROM Dostyp")
+    Dostyp=cursor.fetchall()
+    conn.close()
+    return Dostyp
+
+def get_gos_persona():
+    conn =sqlite3.connect("fcb.db")
+    cursor=conn.cursor
+
+    cursor.execute("SELECT * FROM gos_persona")
+    gos_persona=cursor.fetchall()
+    conn.close()
+    return gos_persona
+
+def get_file():
+    conn =sqlite3.connect("fcb.db")
+    cursor=conn.cursor
+
+    cursor.execute("SELECT * FROM file")
+    file=cursor.fetchall()
+    conn.close()
+    return file
+
+def get_Citizens():
+    conn =sqlite3.connect("fcb.db")
+    cursor=conn.cursor
+
+    cursor.execute("SELECT * FROM Citizens")
+    Citizens=cursor.fetchall()
+    conn.close()
+    return Citizens
 
 def auth_user(login, password):
     conn = sqlite3.connect("fcb.db")
