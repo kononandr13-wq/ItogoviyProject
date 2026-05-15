@@ -12,13 +12,13 @@ def index():
 def city():
     return render_template('baza_graz.html')
 @app.route('/rozusk')
-def city():
+def rozusk():
     return render_template('vudat_rozusk.html')
 @app.route('/shtraf')
-def city():
+def shtraf():
     return render_template('vipisat_shtraf.html')
 @app.route('/baza_oper')
-def city():
+def baza_oper():
     return render_template('baza_oper_y_fcb.html')
 
 
@@ -32,19 +32,17 @@ def register():
         pass2=request.form["pass2"]
         errors=[]
 
-        #Проверка существования пользователя
+
         if database.is_user_exists(login):
             errors.append("Такой пользователь уже существует")
 
-        #Проверка на одинаковость паролей
+
         if pass1 !=pass2:
             errors.append("Пароли не совпадают")
 
-        #Проверка качества пароля
         if len(pass1)<4:
             errors.append("Пароль должен быть минимум 4 символа")
 
-        #Если нет ошибок - регистрация
         if len(errors)==0:
             database.add_user(login,pass1)
             return render_template("success_register.html")
