@@ -11,9 +11,12 @@ def create_db():
             level VARCHAR(1000) NOT NULL
             )
     '''
+
+
+    
     cursor.execute(sql)
 
-    # Добавление 3 уровней доступа (Первый, Второй, Третий)
+
     cursor.execute("INSERT INTO Dostyp(level) VALUES('Первый уровень')")
     cursor.execute("INSERT INTO Dostyp(level) VALUES('Второй уровень')")
     cursor.execute("INSERT INTO Dostyp(level) VALUES('Третий уровень')")
@@ -48,8 +51,8 @@ def create_db():
         CREATE TABLE IF NOT EXISTS Citizens (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
             Name VARCHAR(1000) NOT NULL,
-            Surname  VARCHAR(1000) NOT NULL,
-            Patronymic  VARCHAR(1000) NOT NULL,
+            Surname VARCHAR(1000) NOT NULL,
+            Patronymic VARCHAR(1000) NOT NULL,
             is_wanted VARCHAR(1000) NOT NULL,
             file_id INTEGER,
             FOREIGN KEY (file_id) REFERENCES file(id)
@@ -98,10 +101,10 @@ def add_citizens(name,surname, patronymic,is_wanted):
 def is_user_exists(login):
     conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM User WHERE login = ?", (login,))
+    cursor.execute("SELECT * FROM Citizens WHERE Surname = ?", (login,))
     user = cursor.fetchone()
+    return user != None
 
 if __name__ == "__main__":
     create_db()
     add_citizens("tIMUR", "Tmalowenlora", "aklwjhbdk", 1)
-
