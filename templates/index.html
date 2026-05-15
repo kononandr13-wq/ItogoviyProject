@@ -5,21 +5,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная страница оперативника УФСБ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a472a 0%, #0a1f14 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            padding-top: 50px;
+        }
+        .card {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #c4a747;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #2d5a3b 0%, #1a3a25 100%);
+            color: #ffd700;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 2px solid #c4a747;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        .btn-fsb {
+            background: linear-gradient(135deg, #2d5a3b 0%, #1a3a25 100%);
+            color: #ffd700;
+            border: 1px solid #c4a747;
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .btn-fsb:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #3a7a4f 0%, #2a5a35 100%);
+            color: #ffe44d;
+        }
+        .user-info {
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #c4a747;
+        }
+        .user-info h4 {
+            color: #ffd700;
+            margin: 0;
+        }
+        .user-info p {
+            color: #fff;
+            margin: 5px 0 0 0;
+        }
+        h1 {
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo i {
+            font-size: 60px;
+            color: #ffd700;
+        }
+    </style>
 </head>
 <body>
-    <form action="{{ url_for('city') }}" method="get">
-    <button type="submit" class="btn btn-warning">База данных граждан РФ</button>
-</form>
-    <form action="{{ url_for('rozusk') }}" method="get">
-    <button type="submit" class="btn btn-warning">Выдача розыска</button>
-</form>
-    <form action="{{ url_for('shtraf') }}" method="get">
-    <button type="submit" class="btn btn-warning">Выдача штрафов</button>
-</form>
-    <form action="{{ url_for('baza_oper') }}" method="get">
-    <button type="submit" class="btn btn-warning">База данных оперативников у ФСБ</button>
-</form>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1>УФСБ России</h1>
+                <div class="card">
+                    <div class="card-header">
+                        Панель управления
+                    </div>
+                    <div class="card-body">
+                        <div class="user-info">
+                            <h4>{{ user.rank }} {{ user.Surname }} {{ user.Name }}</h4>
+                            <p>Уровень доступа: {{ user.dostyp_id }}</p>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form action="{{ url_for('city') }}" method="get">
+                                    <button type="submit" class="btn btn-fsb">
+                                        <i class="fas fa-users"></i> База данных граждан РФ
+                                    </button>
+                                </form>
+                            </div>
+                            {% if user.rank_level >= 4 %}
+                            <div class="col-md-6">
+                                <form action="{{ url_for('rozusk') }}" method="get">
+                                    <button type="submit" class="btn btn-fsb">
+                                        <i class="fas fa-search"></i> Выдача розыска
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                            {% if user.rank_level >= 7 %}
+                            <div class="col-md-6">
+                                <form action="{{ url_for('shtraf') }}" method="get">
+                                    <button type="submit" class="btn btn-fsb">
+                                        <i class="fas fa-gavel"></i> Выдача штрафов
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                            {% if user.rank_level >= 11 %}
+                            <div class="col-md-6">
+                                <form action="{{ url_for('baza_oper') }}" method="get">
+                                    <button type="submit" class="btn btn-fsb">
+                                        <i class="fas fa-user-shield"></i> База данных сотрудников
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                            <div class="col-md-12 mt-3">
+                                <form action="{{ url_for('logout') }}" method="get">
+                                    <button type="submit" class="btn btn-fsb" style="background: linear-gradient(135deg, #8b0000 0%, #5a0000 100%);">
+                                        <i class="fas fa-sign-out-alt"></i> Выйти
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </body>
 </html>
-#ВЫДАЧА РОЗЫСКА,ВЫДАЧА ШТРАФОВ,БАЗА ДАННЫХ ОПЕРАТИВНИКОВ У ФСБ,
