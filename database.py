@@ -66,7 +66,7 @@ def get_users():
     conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Dostyp")
-    cursor.execute("SELECT * FROM User")
+    cursor.execute("SELECT * FROM Citizens")
     users = cursor.fetchall()
     conn.close()
     return users
