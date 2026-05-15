@@ -78,7 +78,7 @@ def get_users():
 
 def get_Dostyp():
     conn =sqlite3.connect("fcb.db")
-    cursor=conn.cursor
+    cursor=conn.cursor()
 
     cursor.execute("SELECT * FROM Dostyp")
     Dostyp=cursor.fetchall()
@@ -87,7 +87,7 @@ def get_Dostyp():
 
 def get_gos_persona():
     conn =sqlite3.connect("fcb.db")
-    cursor=conn.cursor
+    cursor=conn.cursor()
 
     cursor.execute("SELECT * FROM gos_persona")
     gos_persona=cursor.fetchall()
@@ -96,7 +96,7 @@ def get_gos_persona():
 
 def get_file():
     conn =sqlite3.connect("fcb.db")
-    cursor=conn.cursor
+    cursor=conn.cursor()
 
     cursor.execute("SELECT * FROM file")
     file=cursor.fetchall()
@@ -105,7 +105,7 @@ def get_file():
 
 def get_Citizens():
     conn =sqlite3.connect("fcb.db")
-    cursor=conn.cursor
+    cursor=conn.cursor()
 
     cursor.execute("SELECT * FROM Citizens")
     Citizens=cursor.fetchall()
