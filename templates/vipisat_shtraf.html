@@ -1,11 +1,116 @@
-<!DOCTYPE html>
+shtraf<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Выдача штрафов - УФСБ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a472a 0%, #0a1f14 100%);
+            min-height: 100vh;
+        }
+        .container {
+            padding: 20px;
+        }
+        .card {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #c4a747;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #2d5a3b 0%, #1a3a25 100%);
+            color: #ffd700;
+            font-weight: bold;
+        }
+        .btn-fsb {
+            background: linear-gradient(135deg, #2d5a3b 0%, #1a3a25 100%);
+            color: #ffd700;
+            border: 1px solid #c4a747;
+        }
+        .table {
+            color: white;
+        }
+        .table thead th {
+            color: #ffd700;
+        }
+        .user-info {
+            color: white;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <div class="user-info">
+            <strong>{{ user.rank }} {{ user.Surname }} {{ user.Name }}</strong>
+            <a href="{{ url_for('index') }}" class="btn btn-sm btn-fsb float-end">На главную</a>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                Выписать штраф
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('issue_fine') }}">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select name="citizen_id" class="form-control" required>
+                                <option value="">Выберите гражданина</option>
+                                {% for citizen in citizens %}
+                                <option value="{{ citizen.user_id }}">{{ citizen.Surname }} {{ citizen.Name }} {{ citizen.Patronymic }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" name="amount" class="form-control" placeholder="Сумма штрафа (руб)" required>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="reason" class="form-control" placeholder="Причина штрафа" required>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-fsb">Выписать</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                Список выданных штрафов
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ФИО</th>
+                                <th>Сумма</th>
+                                <th>Причина</th>
+                                <th>Статус</th>
+                                <th>Дата выдачи</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for fine in fines_list %}
+                            <tr>
+                                <td>{{ fine.Surname }} {{ fine.Name }} {{ fine.Patronymic }}</td>
+                                <td>{{ fine.amount }} руб.</td>
+                                <td>{{ fine.reason }}</td>
+                                <td>{% if fine.status == 'unpaid' %}Не оплачен{% else %}Оплачен{% endif %}</td>
+                                <td>{{ fine.date_issued }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

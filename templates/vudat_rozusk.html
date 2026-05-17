@@ -3,9 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Выдача розыска - УФСБ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a472a 0%, #0a1f14 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            padding: 20px;
+        }
+        .card {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #c4a747;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #2d5a3b 0%, #1a3a25 100%);
+            color: #ffd700;
+            font-weight: bold;
+        }
+        .btn-fsb {
+            background: linear-gradient(135deg, #2d5a3b 0%, #1a3a25 100%);
+            color: #ffd700;
+            border: 1px solid #c4a747;
+        }
+        .table {
+            color: white;
+        }
+        .table thead th {
+            color: #ffd700;
+        }
+        .user-info {
+            color: white;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <div class="user-info">
+            <strong>{{ user.rank }} {{ user.Surname }} {{ user.Name }}</strong>
+            <a href="{{ url_for('index') }}" class="btn btn-sm btn-fsb float-end">На главную</a>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                Объявить в розыск
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('issue_wanted') }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <select name="citizen_id" class="form-control" required>
+                                <option value="">Выберите гражданина</option>
+                                {% for citizen in citizens %}
+                                <option value="{{ citizen.user_id }}">{{ citizen.Surname }} {{ citizen.Name }} {{ citizen.Patronymic }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="reason" class="form-control" placeholder="Причина объявления в розыск" required>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-fsb">Объявить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                Список лиц в розыске
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ФИО</th>
+                                <th>Причина</th>
+                                <th>Дата объявления</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for wanted in wanted_list %}
+                            <tr>
+                                <td>{{ wanted.Surname }} {{ wanted.Name }} {{ wanted.Patronymic }}</td>
+                                <td>{{ wanted.reason }}</td>
+                                <td>{{ wanted.date_issued }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
