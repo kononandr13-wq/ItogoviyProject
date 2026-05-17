@@ -1,0 +1,52 @@
+acces<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступ запрещен - УФСБ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a472a 0%, #0a1f14 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #c4a747;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #8b0000 0%, #5a0000 100%);
+            color: #ffd700;
+            font-weight: bold;
+        }
+        .btn-fsb {
+            background: linear-gradient(135deg, #2d5a3b 0%, #1a3a25 100%);
+            color: #ffd700;
+            border: 1px solid #c4a747;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        ⚠️ ДОСТУП ЗАПРЕЩЕН ⚠️
+                    </div>
+                    <div class="card-body">
+                        <h3 style="color: #ff6b6b;">У вас недостаточно прав для доступа к этому разделу!</h3>
+                        <p style="color: white; margin-top: 20px;">Обратитесь к вышестоящему руководству для повышения уровня доступа.</p>
+                        <a href="{{ url_for('index') }}" class="btn btn-fsb mt-3">Вернуться на главную</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
