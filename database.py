@@ -46,7 +46,7 @@ def create_db():
         )
     '''
     cursor.execute(sql)
-    conn.commit()
+    conn.commit()                                                                                                                                                                                                                                                                                                                                                                                                                               
     sql='''
         CREATE TABLE IF NOT EXISTS Citizens (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
