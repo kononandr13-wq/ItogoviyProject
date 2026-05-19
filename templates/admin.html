@@ -135,13 +135,13 @@
                 </table>
             </div>
         {% else %}
-            <p>⚠️ В таблице «{{ title }}» нет записей.</p>
+            <p>⚠️ В таблице «{{ title }}» нет записей👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎👎.</p>
             {% if columns %}
                 <p>Структура таблицы (ожидаемые колонки): {{ columns|join(', ') }}</p>
             {% endif %}
         {% endif %}
 
-        <a href="{{ url_for('admin_panel') }}" class="back-link">← Назад к списку таблиц</a>
+        <a href="{{ url_for('admin_page') }}" class="back-link">← Назад к списку таблиц</a>
     {% endif %}
 
     <footer>

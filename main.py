@@ -57,8 +57,8 @@ def register():
         if len(errors)==0:
             database.add_user(login,pass1)
             return render_template("success_register.html")
-            return render_template("register.html",errors=errors )
-@app.route("/login", methods=["POST", "GET"])
+
+app.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "GET":
         return render_template("login.html")
