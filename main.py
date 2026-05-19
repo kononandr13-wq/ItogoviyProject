@@ -71,7 +71,7 @@ def login():
         if auth_user == None:
             return render_template(
                 "login.html",
-                errors=["Неверный параль"]
+                errors=["Неверный пароль"]
             )
         else:
             print("Успешная авторизация")

@@ -116,6 +116,14 @@ def auth_user(login, password):
     conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
 
+def add_oper(login, password, Name, Surname, Patronymic, rank, dostyp_id):
+    conn = sqlite3.connect("fcb.db")
+    cursor=conn.cursor()
+    cursor.execute(
+        "INSERT INTO gos_persona (login, password, Name, Surname, Patronymic, rank, dostyp_id) VALUES (?,?,?,?,?,?,?)",
+        (login, password, Name, Surname, Patronymic, rank, dostyp_id)
+    )
+    conn.commit()
 
 def add_citizens(name,surname, patronymic,is_wanted):
     conn = sqlite3.connect("fcb.db")
@@ -146,3 +154,4 @@ def is_user_exists(login):
 if __name__ == "__main__":
     create_db()
     add_citizens("tIMUR", "Tmalowenlora", "aklwjhbdk", 1)
+    add_oper("general", "general123", "Андрей", "Кононенко", "Сергеевич", 17, 3)
