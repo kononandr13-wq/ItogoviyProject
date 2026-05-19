@@ -1,5 +1,6 @@
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask, render_template
 
 def create_db():
     conn = sqlite3.connect("fcb.db")
@@ -69,48 +70,46 @@ def create_db():
 def get_users():
     conn = sqlite3.connect("fcb.db")
     cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM Dostyp")
-    cursor.execute("SELECT * FROM Citizens")
+    # Если нужно объединить данные из нескольких таблиц:
+    cursor.execute("SELECT 'gos_persona' as source, user_id, Name, Surname FROM gos_persona UNION ALL SELECT 'Citizens', user_id, Name, Surname FROM Citizens")
     users = cursor.fetchall()
     conn.close()
     return users
 
 def get_Dostyp():
-    conn =sqlite3.connect("fcb.db")
-    cursor=conn.cursor()
-
+    conn = sqlite3.connect("fcb.db")
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM Dostyp")
-    Dostyp=cursor.fetchall()
+    Dostyp = cursor.fetchall()
     conn.close()
     return Dostyp
 
 def get_gos_persona():
-    conn =sqlite3.connect("fcb.db")
-    cursor=conn.cursor()
-
+    conn = sqlite3.connect("fcb.db")
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM gos_persona")
-    gos_persona=cursor.fetchall()
+    gos_persona = cursor.fetchall()
     conn.close()
     return gos_persona
 
 def get_file():
-    conn =sqlite3.connect("fcb.db")
-    cursor=conn.cursor()
-
+    conn = sqlite3.connect("fcb.db")
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM file")
-    file=cursor.fetchall()
+    file = cursor.fetchall()
     conn.close()
     return file
 
 def get_Citizens():
-    conn =sqlite3.connect("fcb.db")
-    cursor=conn.cursor()
-
+    conn = sqlite3.connect("fcb.db")
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM Citizens")
-    Citizens=cursor.fetchall()
+    Citizens = cursor.fetchall()
     conn.close()
     return Citizens
+
+# Маршрут для админки (одна страница со всеми таблицами)
+
 
 def auth_user(login, password):
     conn = sqlite3.connect("fcb.db")

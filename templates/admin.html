@@ -2,151 +2,111 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ-панель БД</title>
+    <title>Админ-панель - все таблицы</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-        .menu {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 20px 0;
-        }
-        .menu a {
-            display: inline-block;
-            background: #3498db;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .menu a:hover {
-            background: #2980b9;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            overflow-x: auto;
-            display: block;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-            vertical-align: top;
-        }
-        th {
-            background-color: #2c3e50;
-            color: white;
-            position: sticky;
-            top: 0;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            background: #95a5a6;
-            color: white;
-            padding: 8px 15px;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        .back-link:hover {
-            background: #7f8c8d;
-        }
-        .info {
-            margin: 10px 0;
-            color: #555;
-        }
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 0.8em;
-            color: #888;
-        }
-        @media (max-width: 768px) {
-            th, td {
-                font-size: 12px;
-                padding: 4px;
-            }
-        }
+        body { font-family: Arial; margin: 20px; }
+        .table-block { margin-bottom: 40px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        h2 { background: #f2f2f2; padding: 10px; }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>{{ title }}</h1>
+    <h1>Панель управления БД</h1>
 
-    {% if show_menu %}
-        <div class="menu">
-            {% for key, info in tables.items() %}
-                <a href="{{ url_for('admin_panel', table=key) }}">{{ info.title }}</a>
-            {% endfor %}
-        </div>
-        <p>Выберите таблицу из списка выше для просмотра содержимого.</p>
-    {% else %}
-        <!-- Отображаем саму таблицу -->
-        {% if rows %}
-            <div class="info">Найдено записей: {{ rows|length }}</div>
-            <div style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            {% for col in columns %}
-                                <th>{{ col }}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in rows %}
-                            <tr>
-                                {% for col in columns %}
-                                    <td>
-                                        {# row может быть sqlite3.Row или dict, обращаемся по ключу #}
-                                        {{ row[col] if col in row.keys() else '(нет данных)' }}
-                                    </td>
-                                {% endfor %}
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
-            <p>⚠️ В таблице «{{ title }}» нет записей.</p>
-            {% if columns %}
-                <p>Структура таблицы (ожидаемые колонки): {{ columns|join(', ') }}</p>
-            {% endif %}
-        {% endif %}
+    <!-- Таблица Dostyp -->
+    <div class="table-block">
+        <h2>Уровни доступа (Dostyp)</h2>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Уровень</th></tr>
+            </thead>
+            <tbody>
+                {% for row in dostyp %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-            <a href="{{ url_for('admin_page') }}" class="back-link">← Назад к списку таблиц</a>
-    {% endif %}
+    <!-- Таблица gos_persona -->
+    <div class="table-block">
+        <h2>Гос. служащие (gos_persona)</h2>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Звание</th><th>Уровень доступа ID</th><th>Имя</th><th>Фамилия</th><th>Отчество</th><th>Логин</th><th>Пароль</th></tr>
+            </thead>
+            <tbody>
+                {% for row in gos_persona %}
+                <tr>
+                    {% for val in row %}
+                    <td>{{ val }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <footer>
-        База данных: fcb.db | Админ-панель
-    </footer>
-</div>
+    <!-- Таблица file -->
+    <div class="table-block">
+        <h2>Досье (file)</h2>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Причина</th><th>Заметки</th><th>Фото</th><th>Билеты</th></tr>
+            </thead>
+            <tbody>
+                {% for row in file %}
+                <tr>
+                    {% for val in row %}
+                    <td>{{ val }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Таблица Citizens -->
+    <div class="table-block">
+        <h2>Граждане (Citizens)</h2>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Имя</th><th>Фамилия</th><th>Отчество</th><th>В розыске</th><th>ID досье</th></tr>
+            </thead>
+            <tbody>
+                {% for row in citizens %}
+                <tr>
+                    {% for val in row %}
+                    <td>{{ val }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Дополнительно: объединённые пользователи -->
+    <div class="table-block">
+        <h2>Все пользователи (объединённые)</h2>
+        <table>
+            <thead>
+                <tr><th>Источник</th><th>ID</th><th>Имя</th><th>Фамилия</th></tr>
+            </thead>
+            <tbody>
+                {% for row in users %}
+                <tr>
+                    {% for val in row %}
+                    <td>{{ val }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

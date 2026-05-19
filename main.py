@@ -77,5 +77,20 @@ def login():
             session["user_id"] = auth_user["user_id"]
             session["login"] = auth_user["user_login"]
             return redirect(url_for('index'))
+        
+@app.route('/admin')
+def admin_panel():
+    dostyp_data = database.get_Dostyp()
+    gos_persona_data = database.get_gos_persona()
+    file_data = database.get_file()
+    citizens_data = database.get_Citizens()
+    users_data = database.get_users()   # если нужна сводная информация
+
+    return render_template('admin.html',
+                           dostyp=dostyp_data,
+                           gos_persona=gos_persona_data,
+                           file=file_data,
+                           citizens=citizens_data,
+                           users=users_data)
 if __name__ == '__main__':
     app.run(debug=True)
